@@ -13,7 +13,7 @@
 .container{
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    /* justify-content: space-between; */
     align-items: center;
     height: 100vh;
     background-color: #264653;
@@ -24,7 +24,7 @@ header{
     justify-content: center;
     font-weight: bold;
     text-transform: uppercase;
-    margin-bottom: 60px;
+    margin-bottom: 20px;
 }
 
 main.board{
@@ -64,7 +64,37 @@ main.board{
 }
 
 
-section.keyboard{
+.keyboard{
+    width: 656px;
+    position: fixed;
+    bottom: 0;
+}
 
+.keyboard-row{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.keyboard-row .letter{
+    width: 56px;
+    height: 60px;
+    font-size: 30px;
+}
+
+.keyboard-row .enter{
+    width: 184px;
+}
+
+.keyboard-row-first{
+    margin-right: 24px;
+}
+
+.keyboard-row-second{
+    margin-left: 24px;
+}
+
+.keyboard-row-third{
+    margin-left: 48px;
 }
 

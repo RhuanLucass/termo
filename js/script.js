@@ -1,4 +1,5 @@
-const div = document.querySelectorAll('.letter');
+const div = document.querySelectorAll('.board .letter');
+const keyboardLetter = document.querySelectorAll('.keyboard .letter');
 
 var currentRow = 0;
 var success = false;
@@ -84,5 +85,36 @@ function moveLeft(){
         editLeft?.parentElement?.children.item(index-1)?.classList.add('edit');
         // Removendo conteúdo da div posterior
         document.querySelectorAll('.edit')[1].classList.remove('edit')
+    }
+}
+
+
+// Keyboard
+keyboardLetter.forEach(keyb => keyb.addEventListener('click', clickKeyboard));
+
+function clickKeyboard(e){
+    if(!success){
+        var keyLetter = e.target;
+        var letter = keyLetter.getAttribute('keyboard-key');
+        console.log(letter)
+
+        
+        // RegExp para verificar se o que foi clicado é uma letra
+        if(/[a-zA-z]/.test(letter) && letter.length === 1){
+            setCurrentPositionValue(letter);
+            moveRight();
+        }
+        else if(letter === 'ArrowLeft')
+            moveLeft();
+        else if(letter === 'ArrowRight')
+            moveRight();
+        else if(letter === 'Backspace'){
+            document.querySelector('.edit').innerHTML = '';
+            moveLeft();
+            // setCurrentPositionValue();
+        }
+        else if(letter === 'Enter'){
+
+        }
     }
 }
