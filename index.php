@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -103,6 +105,7 @@
         </section>
     </div>
     <script src="js/script.js"></script>
+    <script src="js/words.js"></script>
 </body>
 
 </html>
