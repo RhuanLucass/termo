@@ -21,7 +21,7 @@
             <h1>Painel de Controle</h1>
         </header>
         <?php  
-            include('select.php');
+            include('crud/select.php');
             $info = select();
         ?> 
         <main>
@@ -42,7 +42,7 @@
                             <td><?php echo date('d/m/Y', strtotime($value['Day'])); ?></td>
                             <td class="id"><?php echo $value['Id']?></td>
                             <td class="editar" data-value="<?php echo $value['Value']?>" data-date="<?php echo $value['Day']; ?>" data-id="<?php echo $value['Id']?>"><a>✓</a></td>
-                            <td class="apagar"><a href="delete.php?id=<?php echo $value['Id'] ?>">X</a></td>
+                            <td class="apagar"><a href="crud/delete.php?id=<?php echo $value['Id'] ?>">X</a></td>
                         </tr>
                         <?php } ?>
                     </tbody>
@@ -61,7 +61,7 @@
                 <span class="close-modal">x</span>
                 <h1>Adicionar Palavra</h1>
 
-                <form action="insert.php" method="POST">
+                <form action="crud/insert.php" method="POST">
                     <label for="word">Palavra:</label>
                     <input type="text" name="palavra" id="word" maxlength="5">
 
@@ -79,7 +79,7 @@
                 <span class="close-modal">x</span>
                 <h1>Editar Palavra</h1>
 
-                <form action="update.php" method="POST">
+                <form action="crud/update.php" method="POST">
                     <label for="word-edit">Palavra:</label>
                     <input type="text" name="palavra-editada" id="word-edit" maxlength="5">
 

@@ -10,7 +10,7 @@
         $sql = $pdo->prepare("UPDATE daywords SET Value = UPPER('$value'), Day = '$day' WHERE Id = $id;");
         $sql->execute();
         unset($pdo);
-        header('Location: painel.php');
+        header('Location: ../painel.php');
         // return $info;
     }
     update();

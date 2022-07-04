@@ -7,7 +7,7 @@
         $sql = $pdo->prepare("DELETE FROM daywords WHERE Id = $id");
         $sql->execute();
         unset($pdo);
-        header('Location: painel.php');
+        header('Location: ../painel.php');
     }
     delete();
 ?>

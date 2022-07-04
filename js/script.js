@@ -3,7 +3,6 @@ const keyboardLetter = document.querySelectorAll('.keyboard .letter');
 
 var currentRow = 0;
 var success = false;
-
 //Seleciona o tecla clicada
 div.forEach(letter => letter.addEventListener('click', clickLetter))
 
@@ -15,7 +14,7 @@ function clickLetter(){
         
         // console.log(row, pos);
     
-        if(parseInt(row) === currentRow){
+        if(parseInt(row) === this.currentRow){
             edit.classList.remove('edit');
             div[pos].classList.add('edit');
         }
@@ -41,12 +40,14 @@ function mapKeyboard(e){
         else if(key === 'ArrowRight')
             moveRight();
         else if(key === 'Backspace'){
-            document.querySelector('.edit').innerHTML = '';
-            moveLeft();
-            // setCurrentPositionValue();
+            if(document.querySelector('.edit').innerHTML === '')
+                moveLeft();
+            // Colocando valor vazio no campo
+            setCurrentPositionValue('');
         }
         else if(key === 'Enter'){
-
+            // Enviar requisição para o backend
+            sendWord();
         }
     }
 }
@@ -88,6 +89,35 @@ function moveLeft(){
     }
 }
 
+function sendWord(){
+    var word = '';
+    word = this.getWord();
+    
+    if(word.length < 5){
+        alert('A palavra deve possuir 5 letras!');
+    }
+    else{
+        requestWord(word.toLocaleLowerCase());
+    }
+}
+
+function getWord(){
+    var word = '';
+
+    const row = document.querySelector(`[row="${this.currentRow}"]`);
+    // console.log(row);
+
+    if(row !== undefined){
+        for(let i = 0; i < row?.children.length; i++){
+            const letter = row?.children.item(i)?.innerHTML;
+            if(letter !== undefined){
+                word += letter;
+            }
+        }
+    }
+
+    return word;
+}
 
 // Keyboard
 keyboardLetter.forEach(keyb => keyb.addEventListener('click', clickKeyboard));
@@ -96,11 +126,11 @@ function clickKeyboard(e){
     if(!success){
         var keyLetter = e.target;
         var letter = keyLetter.getAttribute('keyboard-key');
-        console.log(letter)
+        // console.log(letter);
 
         
         // RegExp para verificar se o que foi clicado é uma letra
-        if(/[a-zA-z]/.test(letter) && letter.length === 1){
+        if(/[a-zA-Z]/.test(letter) && letter.length === 1){
             setCurrentPositionValue(letter);
             moveRight();
         }
@@ -109,12 +139,96 @@ function clickKeyboard(e){
         else if(letter === 'ArrowRight')
             moveRight();
         else if(letter === 'Backspace'){
-            document.querySelector('.edit').innerHTML = '';
+            if(document.querySelector('.edit').innerHTML === '')
             moveLeft();
-            // setCurrentPositionValue();
+            
+            setCurrentPositionValue('');
         }
         else if(letter === 'Enter'){
-
+            // Enviar requisição para o backend
+            sendWord();
         }
     }
+}
+
+// Adicionando efeito nos elementos
+function results(response){
+    // console.log(response);
+    var result = response;
+    const row = document.querySelector(`[row="${this.currentRow}"]`);
+
+    for(let i = 0; i < result.arrayLetter.length; i++){
+        let validationLetter = result.arrayLetter[i];
+        pos = row.querySelector(`[pos="${i}"]`);
+        // console.log(pos)
+        var countAttempt = validationLetter.CountAttempt
+        if(validationLetter.Exists){
+            if(validationLetter.CountDayWord === 1){
+                
+            }
+            if(validationLetter.RightPlace)
+                pos?.classList.add('right');
+            else
+                pos?.classList.add('place');
+        }else
+            pos?.classList.add('wrong');
+        // Removendo edição e linha ativa
+        setTimeout(() => {
+            pos?.classList.remove('edit');
+            pos?.classList.remove('active');
+        },2000);
+    }
+
+    // Próxima linha e notificação
+    setTimeout(() => {
+        if(result.Success){
+            this.success = true;
+            console.log('Sucesso!');
+        }else
+            this.enableNextRow();
+        
+        this.setKeyboardColor(result);
+    },1400);
+}
+
+
+function enableNextRow(){
+    this.currentRow++;
+
+    const row = document.querySelector(`[row="${this.currentRow}"]`);
+    if(row !== undefined){
+        for(let i = 0; i < row?.children.length; i++){
+            const letter = row?.children.item(i);
+            letter?.classList.add('active');
+            if(i == 0)
+                letter?.classList.add('edit');
+
+            // console.log(letter.parentNode)
+        }
+    }
+}
+
+function setKeyboardColor(validations){
+    for(let i = 0; i < validations.arrayLetter.length; i++){
+        const validationLetter = validations.arrayLetter[i];
+        // console.log(validationLetter);
+        var element = document.querySelector(`[keyboard-key="${validationLetter.Value.toUpperCase()}"]`);
+
+        if(validationLetter.Exists){
+            if(validationLetter.RightPlace){
+                element?.classList.remove('place');
+                element?.classList.add('right');
+            }else{
+                if(!element.classList.contains('right'))
+                    element?.classList.add('place');
+            }
+        }else
+            element?.classList.add('wrong');
+    }
+}
+
+
+// REQUISIÇÃO POST SEM REFRESH
+function requestWord(word){
+    sendAjax(word);
 }

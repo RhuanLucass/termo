@@ -1,5 +1,5 @@
 <?php
-    include('connect.php');
+    include('crud/connect.php');
 
     function dayWord(){
         $hoje = date('Y/m/d');

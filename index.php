@@ -1,16 +1,17 @@
-
-
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 
 <head>
+    <?php
+        define('HOME', 'http://localhost/Projetos%20Novos/termo/');
+    ?>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Termo</title>
-
+    <base id="urlHome" href="<?=HOME?>">
     <!-- CSS -->
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="<?=HOME?>css/style.css">
 
     <!-- FONT -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -102,10 +103,12 @@
                 <div class="letter" keyboard-key="M">M</div>
                 <div class="letter enter" keyboard-key="Enter">Enter</div>
             </div>
+            <?php include('php/validations.php'); ?>
         </section>
     </div>
-    <script src="js/script.js"></script>
-    <script src="js/words.js"></script>
+    <script src="<?=HOME?>js/script.js"></script>
+    <script src="<?=HOME?>js/ajax.js"></script>
+    <!-- <script src="js/words.js"></script> -->
 </body>
 
 </html>

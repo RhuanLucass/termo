@@ -8,7 +8,7 @@
         $sql = $pdo->prepare("INSERT INTO daywords(Value, Day) VALUES (UPPER('$word'), '$day')");
         $sql->execute();
         unset($pdo);
-        header('Location: painel.php');
+        header('Location: ../painel.php');
     }
     registration();
 ?>
